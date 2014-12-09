@@ -6,16 +6,17 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.activeandroid.query.Select;
+import com.dreamers.model.Generic;
 
 
 public class DrugOptionActivity extends Activity {
@@ -23,8 +24,8 @@ public class DrugOptionActivity extends Activity {
 	boolean data=false;
 	
 	
-	ArrayList<String> banglaWordList=new ArrayList<String>();
-	ArrayList<Integer> bngId=new ArrayList<Integer>();
+	ArrayList<String> name=new ArrayList<String>();
+	ArrayList<String> code=new ArrayList<String>();
 	
 	
 	@Override
@@ -48,10 +49,7 @@ public class DrugOptionActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent intent= new Intent(DrugOptionActivity.this,SearchGeneric.class);
-				startActivity(intent);
-				finish();
-				overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+				new AsyncTaskRunnerGeneric().execute();
 			}
 		});
 		
@@ -86,12 +84,112 @@ public class DrugOptionActivity extends Activity {
 		
 	}
 
+
+	
+	
+	
+	
+	
+	
+	
+	
+	//----------------- Generic Search---------------------------
+	
+	
+
+
+	public class	AsyncTaskRunnerGeneric extends AsyncTask<String, String, String>
+	{
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+	protected String doInBackground(String... arg0) {
+		// TODO Auto-generated method stub
+	
+		try
+		{
+		
+				ArrayList<Generic> fav = new Select("generic_name").all().from(Generic.class).execute();
+				
+			
+			int size=fav.size();
+			
+			if(size==0)
+			{
+				data=false;
+			}
+			else
+			{
+				data=true;
+			name.clear();
+			
+			 for (Generic word : fav) {
+		        	
+		        	//favouriteList.add(id.code);
+		           
+		                 
+		               
+		              name.add(word.genericName);
+		             
+		             
+		        }
+			 
+			}
+		}
+		
+		catch(Exception e)
+		{
+			Log.d("ERRORRRRRRRRR", e.toString());
+		}
+		return null;
 	}
+	
+	protected void onPostExecute(String string)
+	{
+		
+		
+		if(data)
+		{
+		
+			Intent intent= new Intent(DrugOptionActivity.this,SearchGeneric.class);
+			intent.putExtra("name", name);
+			
+		startActivity(intent);
+	
+		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+		}
+		else
+		{
+			Toast.makeText(getApplicationContext(), "No data available", Toast.LENGTH_LONG).show();
+		}
+		
+	
+	}
+	
+	
+	
+	}
+
+	
+	
+	
+	
+	
+	
+	//------------------------------------------------------------
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

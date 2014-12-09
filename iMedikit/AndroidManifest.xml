@@ -31,6 +31,7 @@
         <activity android:name=".OptionActivity"></activity>
             <activity android:name=".SearchGeneric"></activity>
              <activity android:name=".DrugOptionActivity"></activity>
+              <activity android:name=".GenericDetails"></activity>
     </application>
 
 </manifest>

@@ -6,16 +6,16 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.dreamers.model.Generic;
+import com.dreamers.model.Trade;
 
 
 public class OptionActivity extends Activity {
@@ -42,7 +42,7 @@ public class OptionActivity extends Activity {
 		others=(LinearLayout)findViewById(R.id.others);
 		
 		
-		doctorSearch=(LinearLayout)findViewById(R.id.search_phonetic);
+		doctorSearch=(LinearLayout)findViewById(R.id.doctor);
 		emergency=(LinearLayout)findViewById(R.id.add);
 		
 		drugSearch.setOnClickListener(new OnClickListener() {
@@ -52,7 +52,7 @@ public class OptionActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent intent= new Intent(OptionActivity.this,DrugOptionActivity.class);
 				startActivity(intent);
-				finish();
+				
 				overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 				
 			}
@@ -84,6 +84,31 @@ doctorSearch.setOnClickListener(new OnClickListener() {
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
 	
+		try
+		{
+		Generic gen=new Generic("Aceclofenac","gen_00001");
+		gen.save();
+		Generic gen2=new Generic("Paracetamol","gen_00002");
+		gen2.save();
+		
+		Trade td=new Trade("Flexi","gen_00001","Square","This is description","100mg twice daily");
+		td.save();
+		
+		Trade td2=new Trade("Ace","gen_00002","Square","This is description","100mg twice daily");
+		td2.save();
+		
+		Trade td3=new Trade("Napa","gen_00002","Square","This is description","100mg twice daily");
+		td3.save();
+		Toast.makeText(getApplicationContext(), "Inserted", Toast.LENGTH_LONG).show();
+			
+		}
+		
+		catch(Exception e)
+		{
+			Toast.makeText(getApplicationContext(), e+"", Toast.LENGTH_LONG).show();
+		}
+		
+		
 	}
 });
 
