@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-     android:background="@drawable/threeclor_gradient"
     android:orientation="vertical" 
     android:weightSum="1"
     >
@@ -51,6 +50,13 @@
         android:layout_height="0dp"
         android:layout_weight=".90"
         android:orientation="vertical" >
+        
+            <fragment 
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.SupportMapFragment"/>
+        
     </LinearLayout>
         
     </LinearLayout>

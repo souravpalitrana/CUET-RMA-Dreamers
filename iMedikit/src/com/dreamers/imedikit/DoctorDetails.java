@@ -1,54 +1,31 @@
 package com.dreamers.imedikit;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.os.AsyncTask;
+import android.graphics.BitmapFactory.Options;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-
-import com.activeandroid.query.Select;
-import com.dreamers.gsonlibrary.District;
-import com.dreamers.gsonlibrary.Special;
-import com.dreamers.model.Generic;
-import com.dreamers.model.Trade;
-import com.google.gson.Gson;
 
 public class DoctorDetails extends Activity {
 	
 	String lat,lon;
 	TextView name,qualification,chember,speciality,visit,working_day;
 	Button map;
-
+   Context context;
+   boolean statusOfGPS,statusOfInternet,statusOfNetwork;
 
 
 	
@@ -65,6 +42,8 @@ public class DoctorDetails extends Activity {
 		speciality=(TextView)findViewById(R.id.speciality);
 		visit=(TextView)findViewById(R.id.visit);
 		working_day=(TextView)findViewById(R.id.working_day);
+		
+		context=this;
 		
 info=(ArrayList<String>) getIntent().getSerializableExtra("name");
 	  map=(Button)findViewById(R.id.map);
@@ -85,12 +64,55 @@ lon=info.get(7);
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
-			Intent intent=new Intent(DoctorDetails.this,DoctorInMap.class);
-			intent.putExtra("lat", lat);
-			intent.putExtra("lon", lon);
-			startActivity(intent);
-		//	finish();
-			overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+			
+			
+	        try {
+	            // Loading map
+					LocationManager manager = (LocationManager) getSystemService(context.LOCATION_SERVICE );
+					statusOfGPS = manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+					statusOfNetwork=manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+					statusOfInternet=isConnectingToInternet();
+					
+					if((statusOfGPS==false&&statusOfNetwork==false)||statusOfInternet==false)
+					{
+						LayoutInflater li = LayoutInflater.from(context);
+						View promptsView;
+						AlertDialog.Builder builder;
+						final AlertDialog alertDialog;
+						Button btnOk=null;
+						Button btnContinue=null;
+						if(statusOfGPS==false&&statusOfInternet==false&&statusOfNetwork==false)
+						{
+							Toast.makeText(getApplicationContext(), "Please turn your GPS and Internet connection ON",Toast.LENGTH_LONG).show();
+						}
+						else if(statusOfInternet==false&&(statusOfGPS==true||statusOfNetwork==true))
+						{
+							Toast.makeText(getApplicationContext(), "Please turn your Internet connection ON",Toast.LENGTH_LONG).show();
+						}
+						else
+						{
+							Toast.makeText(getApplicationContext(), "Please turn your GPS ON",Toast.LENGTH_LONG).show();
+						}
+					}
+				
+					else
+					{
+						if(statusOfNetwork==false)
+						{
+							Toast.makeText(getApplicationContext(), "Please turn your network status ON",Toast.LENGTH_LONG).show();
+						}
+						Intent intent=new Intent(DoctorDetails.this,DoctorInMap.class);
+						intent.putExtra("lat", lat);
+						intent.putExtra("lon", lon);
+						startActivity(intent);
+					//	finish();
+						overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+					}
+	 
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            Toast.makeText(getApplicationContext(), "Internet status and GPS status of device can not be accesed",Toast.LENGTH_LONG).show();
+	        }
 		}
 	});
 		
@@ -116,6 +138,25 @@ lon=info.get(7);
 
 
 	}
+	
+	
+	
+	
+    public boolean isConnectingToInternet(){
+        ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+          if (connectivity != null)
+          {
+              NetworkInfo[] info = connectivity.getAllNetworkInfo();
+              if (info != null)
+                  for (int i = 0; i < info.length; i++)
+                      if (info[i].getState() == NetworkInfo.State.CONNECTED)
+                      {
+                          return true;
+                      }
+ 
+          }
+          return false;
+    }
 	
 	
 	

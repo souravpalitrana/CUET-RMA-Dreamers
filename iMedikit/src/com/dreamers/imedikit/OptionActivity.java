@@ -30,6 +30,8 @@ import android.widget.Toast;
 import com.dreamers.gsonlibrary.District;
 import com.dreamers.gsonlibrary.Herbal;
 import com.dreamers.gsonlibrary.HotTopic;
+import com.dreamers.model.Generic;
+import com.dreamers.model.Trade;
 import com.google.gson.Gson;
 
 
@@ -158,7 +160,8 @@ reminder.setOnClickListener(new OnClickListener() {
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-		
+		Intent in=new Intent(OptionActivity.this,Reminder.class);
+		startActivity(in);
 	}
 });
 

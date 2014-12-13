@@ -61,30 +61,36 @@ public class MainActivity extends Activity {
 			{
 				
 				
-				  ActiveAndroid.beginTransaction();
+				//  ActiveAndroid.beginTransaction();
 				
 				
-				  
-				  
-				  Generic gen=new Generic("Aceclofenac","gen_00001","asd");
-					gen.save();
-					Generic gen2=new Generic("Paracetamol","gen_00002","asd");
-					gen2.save();
+				try
+				{
+				Generic gen=new Generic("Aceclofenac","gen_00001","asd");
+				gen.save();
+				Generic gen2=new Generic("Paracetamol","gen_00002","asd");
+				gen2.save();
+				
+				Trade td=new Trade("Flexi","gen_00001","Square","This is description","100mg twice daily");
+				td.save();
+				
+				Trade td2=new Trade("Ace","gen_00002","Square","This is description","100mg twice daily");
+				td2.save();
+				
+				Trade td3=new Trade("Napa","gen_00002","Square","This is description","100mg twice daily");
+				td3.save();
+			//	Toast.makeText(getApplicationContext(), "Inserted", Toast.LENGTH_LONG).show();
 					
-					Trade td=new Trade("Flexi","gen_00001","Square","This is description","100mg twice daily");
-					td.save();
-					
-					Trade td2=new Trade("Ace","gen_00002","Square","This is description","100mg twice daily");
-					td2.save();
-					
-					Trade td3=new Trade("Napa","gen_00002","Square","This is description","100mg twice daily");
-					td3.save();
-					//Toast.makeText(getApplicationContext(), "Inserted", Toast.LENGTH_LONG).show();
-				  
-					
+				}
+				
+				catch(Exception e)
+				{
+					Toast.makeText(getApplicationContext(), e+"", Toast.LENGTH_LONG).show();
+				}
+				
 				  
 				
-				  ActiveAndroid.setTransactionSuccessful();
+				 // ActiveAndroid.setTransactionSuccessful();
 				  
 				  SharedPreferences pref=getSharedPreferences("database",0);
 					SharedPreferences.Editor editor=pref.edit();
