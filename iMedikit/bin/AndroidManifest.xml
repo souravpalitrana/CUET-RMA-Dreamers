@@ -30,6 +30,8 @@
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.VIBRATE"/> 
+     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
     
 
     <application
@@ -70,7 +72,12 @@
                                  <activity android:name=".HotTopicDescription"></activity>
                                   <activity android:name=".AlarmPopUp"></activity>
                                   <activity android:name=".Reminder"></activity>
+                                   <activity android:name=".EmergencyActivity"></activity>
+                                    <service android:name="BluetoothService"></service>
+                                       <service android:name="ShakeService"></service>
                                          
+                                       
+                                       
         <receiver android:name="AlarmReceiver">
             <intent-filter>
                 <action android:name="com.dreamers.imedikit.ALARM"/>
