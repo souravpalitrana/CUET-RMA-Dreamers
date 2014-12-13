@@ -13,6 +13,8 @@ public class Generic extends Model {
 	@Column (name="generic_code")
 	public String genericCode;
 	
+	@Column (name="generic_dose")
+	public String genericDose;
 	
 	
 	
@@ -22,12 +24,13 @@ public class Generic extends Model {
 		super();
 	}
 	
-	public Generic(String gn, String gc)
+	public Generic(String gn, String gc,String dose)
 	{    
 		super();
 	
 		genericName=gn;
 		genericCode=gc;
+		genericDose=dose;
 	}
 	
 

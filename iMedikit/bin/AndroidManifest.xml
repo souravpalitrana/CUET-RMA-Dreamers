@@ -7,6 +7,7 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
           android:name="com.dreamers.model.MyApplication"
@@ -15,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         
-         <meta-data android:name="AA_DB_NAME" android:value="medikit.db" />
+         <meta-data android:name="AA_DB_NAME" android:value="medikit.sqlite" />
         <meta-data android:name="AA_DB_VERSION" android:value="1" /> 
         
         <activity
@@ -30,8 +31,20 @@
         
         <activity android:name=".OptionActivity"></activity>
             <activity android:name=".SearchGeneric"></activity>
+            <activity android:name=".SearchTrade"></activity>
              <activity android:name=".DrugOptionActivity"></activity>
               <activity android:name=".GenericDetails"></activity>
+              <activity android:name=".SearchTradeDose"></activity>
+              <activity android:name=".SearchGenericDose"></activity>
+                <activity android:name=".DistrictList"></activity>
+                 <activity android:name=".DoctorDetails"></activity>
+                  <activity android:name=".DoctorInMap"></activity>
+                   <activity android:name=".DoctorList"></activity>
+                     <activity android:name=".SpecialList"></activity>
+                       <activity android:name=".HerbalList"></activity>
+                         <activity android:name=".HerbalDetailsActivity"></activity>
+                             <activity android:name=".HotTopicList"></activity>
+                                 <activity android:name=".HotTopicDescription"></activity>
     </application>
 
 </manifest>
